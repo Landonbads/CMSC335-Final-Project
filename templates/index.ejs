@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>NBA Analysis</title>
+    <style>
+        tr:nth-child(odd)   { background-color: lightblue; }
+        tr:nth-child(even)    { background-color: beige; }
+        table {
+            width: 1300px;
+        }
+    </style>
+</head>
+
+<body>
+	<h1 style="text-align:center">NBA Team Statistics Forum</h1>
+    <form action="http://localhost:8081/retrieveData" method="get">
+		<fieldset>
+            <legend>
+                <strong>Team Information</strong>
+            </legend>
+            
+			<label>Team Name: <input type="text" name="teamName"/ placeholder="Lakers"></label>
+			<label>Season year: <input type="text" name="seasonYear"  placeholder="2023"></label>
+		</fieldset>
+		<br>
+		<input type="reset" />
+		<input type="submit" value="Search"/>
+	</form>
+    <br>
+    <h1 style="text-align:center;">Comments</h1>
+    <div id="comments" style="border:2px solid black; padding: 20px;">
+        <%-comments%>
+        <br><br>
+        <form action="http://localhost:8081/postComment", method="post">
+			<label>Username: <input type="text" name="username" placeholder="Bob"></label>
+			<label>Comment: <input type="text" size="50" name="comment" placeholder="Lakers suck"></label>
+            <input type="submit" value="Add comment">
+            <input type="reset">
+        </form>
+    </div>
+</body>
+
+</html>
