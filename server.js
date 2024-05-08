@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 8081;
+const port = process.env.PORT || 8081;
 const path = require("path");
 process.stdin.setEncoding("utf8");
 require("dotenv").config({ path: path.resolve(__dirname, '.env') }) 
@@ -28,6 +28,7 @@ const client = new MongoClient(uri, {serverApi: ServerApiVersion.v1 });
 
 app.get("/", (req, res) => {
   async function retrieveComments() {
+    await client.connect();
     const cursor = client.db(databaseAndCollection.db)
     .collection(databaseAndCollection.collection)
     .find({});
@@ -47,7 +48,8 @@ app.get("/", (req, res) => {
       }
       comments += "</table>";
     }
-    res.render("index", {comments});
+    const baseURL = process.env.BASE_URL || 'http://localhost:8081';
+    res.render("index", {comments, baseURL});
   })();
 });
 
@@ -113,6 +115,7 @@ app.get("/retrieveData/", (req, res) => {
 
 app.post("/postComment", (req,res) => {
   async function addComment(comment) {
+    await client.connect();
     await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).insertOne(comment);
   }
   let {username, comment} = req.body;
