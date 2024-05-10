@@ -23,6 +23,7 @@ const uri = `mongodb+srv://${mongoUsername}:${mongoPassword}@finalcluster.sjq9pk
 /* Our database and collection */
 const databaseAndCollection = {db: dbName, collection:mongoCollection};
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const { error } = require("console");
 const client = new MongoClient(uri, {serverApi: ServerApiVersion.v1 });
 
 
@@ -74,14 +75,15 @@ app.get("/retrieveData/", (req, res) => {
         'X-RapidAPI-Host': process.env.XRapidAPIHost
       }
     };
-  
-    try {
-      const response = await axios.request(options);
+
+    const response = await axios.request(options);
+    if (response.data.response[0] !== undefined) {
       return response.data.response[0].id;
-    } catch (error) {
-      console.log("Error fetching team ID");
-      console.error(error);
     }
+    else {
+      throw new Error("No data received");
+    }
+  
   };
   async function fetchTeamStatistics(teamID) {
     const options = {
@@ -96,14 +98,8 @@ app.get("/retrieveData/", (req, res) => {
         'X-RapidAPI-Host': process.env.XRapidAPIHost
       }
     };
-    
-    try {
       const response = await axios.request(options);
       return response.data;
-    } catch (error) {
-      console.log("Error fetching team statistics");
-      console.error(error);
-    }
   };
 
   fetchTeamID(team).then((id) => {
