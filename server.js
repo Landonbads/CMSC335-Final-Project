@@ -67,7 +67,7 @@ app.get("/retrieveData/", (req, res) => {
       method: 'GET',
       url: 'https://api-nba-v1.p.rapidapi.com/teams',
       params: {
-        search: team
+        search: teamName
       },
       headers: {
         'X-RapidAPI-Key': process.env.XRapidAPIKey,
@@ -79,6 +79,7 @@ app.get("/retrieveData/", (req, res) => {
       const response = await axios.request(options);
       return response.data.response[0].id;
     } catch (error) {
+      console.log("Error fetching team ID");
       console.error(error);
     }
   };
@@ -100,16 +101,20 @@ app.get("/retrieveData/", (req, res) => {
       const response = await axios.request(options);
       return response.data;
     } catch (error) {
+      console.log("Error fetching team statistics");
       console.error(error);
     }
   };
 
   fetchTeamID(team).then((id) => {
   fetchTeamStatistics(id).then((data) => {
-    let {games, points, fgp, assists, steals, turnovers, blocks} = data.response[0]
-    res.render("forum", {team, games, points, fgp, assists, steals, turnovers, blocks})
+    let {games, points, fgp, assists, steals, turnovers, blocks} = data.response[0];
+    res.render("forum", {team, games, points, fgp, assists, steals, turnovers, blocks});
   })
-  });
+  }).catch( (err) => {
+    res.status(500).json({ error: "Failed to retrieve team data. Please try again later." });
+  }
+  );
 });
 
 
