@@ -133,8 +133,8 @@
         <%-comments%>
         <br><br>
         <form action="<%= baseURL %>/postComment" method="post">
-			<label>Username: <input type="text" name="username" placeholder="Bob"></label>
-			<label>Comment: <input type="text" size="50" name="comment" placeholder="Lakers suck"></label>
+			<label>Username: <input type="text" name="username" placeholder="Bob" required></label>
+			<label>Comment: <input type="text" size="50" name="comment" placeholder="Lakers suck" required></label>
             <input type="submit" value="Add comment">
             <input type="reset">
         </form>
