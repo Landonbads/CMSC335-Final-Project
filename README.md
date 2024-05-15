@@ -1,6 +1,6 @@
 **Submitted by:** Landon Badstibner (directory id: landonb)
 
-**Group Members:** Landon Badstibner (landonb), Priyansu Sahu ()
+**Group Members:** Landon Badstibner (landonb), Priyansu Sahu (psahu)
 
 **App Description:** Allow users to query statistics of each NBA team and add public comments
 

@@ -20,7 +20,6 @@ const mongoPassword = process.env.MONGO_DB_PASSWORD;
 const dbName = process.env.MONGO_DB_NAME;
 const mongoCollection = process.env.MONGO_COLLECTION;
 const uri = `mongodb+srv://${mongoUsername}:${mongoPassword}@finalcluster.sjq9pk8.mongodb.net/?retryWrites=true&w=majority&appName=finalcluster`;
-/* Our database and collection */
 const databaseAndCollection = {db: dbName, collection:mongoCollection};
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const { error } = require("console");
@@ -43,7 +42,7 @@ app.get("/", (req, res) => {
       comments = "Be the first to comment";
     } else {
       
-      comments += "<table >";
+      comments += "<table class='comments-table'>";
       for (comment of commentsData) {
         comments += `<tr><td>${comment.commentUserName}: ${comment.singleComment}</td></tr>`;
       }
@@ -55,7 +54,7 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`App running and listening on port ${port}!`);
+  console.log(`App running and listening on port http://localhost:${port}`);
 });
 
 app.get("/retrieveData/", (req, res) => {
@@ -108,7 +107,7 @@ app.get("/retrieveData/", (req, res) => {
     res.render("forum", {team, games, points, fgp, assists, steals, turnovers, blocks});
   })
   }).catch( (err) => {
-    res.status(500).json({ error: "Failed to retrieve team data. Please try again later." });
+    res.render("invalid");
   }
   );
 });
@@ -123,3 +122,4 @@ app.post("/postComment", (req,res) => {
   addComment({commentUserName: username, singleComment:comment})
   res.redirect("/");
 });
+

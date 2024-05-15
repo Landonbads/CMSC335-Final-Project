@@ -5,35 +5,134 @@
 	<meta charset="utf-8" />
 	<title>NBA Analysis</title>
     <style>
-        tr:nth-child(odd)   { background-color: lightblue; }
-        tr:nth-child(even)    { background-color: beige; }
-        table {
-            width: 1300px;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #444;
+        }
+        form {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 600px;
+            margin: 20px auto;
+            text-align: left;
+        }
+        fieldset {
+            border: none;
+            margin-bottom: 15px;
+        }
+        legend {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #444;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        input[type="submit"], input[type="reset"] {
+            background: #5cb85c;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-right: 10px;
+            font-size: 1em;
+        }
+        input[type="reset"] {
+            background: #d9534f;
+        }
+        .comments-table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 90%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .comments-table tr:nth-child(odd) {
+            background-color: lightblue;
+        }
+        .comments-table tr:nth-child(even) {
+            background-color: beige;
+        }
+        .comments-table th, .comments-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        #comments {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 80%;
+            margin: 20px auto;
+            text-align: left;
+        }
+        #comments form {
+            margin-top: 20px;
+        }
+        #comments label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        #comments input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        #comments input[type="submit"], #comments input[type="reset"] {
+            background: #5cb85c;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            margin-right: 10px;
+            font-size: 1em;
+        }
+        #comments input[type="reset"] {
+            background: #d9534f;
         }
     </style>
 </head>
 
 <body>
-	<h1 style="text-align:center">NBA Team Statistics Forum</h1>
+	<h1>NBA Team Statistics Forum</h1>
     <form action="<%= baseURL %>/retrieveData" method="get">
 		<fieldset>
             <legend>
                 <strong>Team Information</strong>
             </legend>
-            
-			<label>Team Name: <input type="text" name="teamName"/ placeholder="Lakers"></label>
-			<label>Season year: <input type="text" name="seasonYear"  placeholder="2023"></label>
+			<label>Team Name: <input type="text" name="teamName" placeholder="Lakers" required></label>
+			<label>Season year: <input type="text" name="seasonYear" placeholder="2023" required></label>
 		</fieldset>
-		<br>
 		<input type="reset" />
 		<input type="submit" value="Search"/>
 	</form>
     <br>
-    <h1 style="text-align:center;">Comments</h1>
-    <div id="comments" style="border:2px solid black; padding: 20px;">
+    <h1>Comments</h1>
+    <div id="comments">
         <%-comments%>
         <br><br>
-        <form action="<%= baseURL %>/postComment", method="post">
+        <form action="<%= baseURL %>/postComment" method="post">
 			<label>Username: <input type="text" name="username" placeholder="Bob"></label>
 			<label>Comment: <input type="text" size="50" name="comment" placeholder="Lakers suck"></label>
             <input type="submit" value="Add comment">
